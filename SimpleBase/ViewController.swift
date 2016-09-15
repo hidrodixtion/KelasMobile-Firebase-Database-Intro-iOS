@@ -11,21 +11,28 @@ import Firebase
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var txtTitle: UILabel!
+    @IBOutlet weak var editTitle: UITextField!
+    
+    
     let _ref = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let condition = _ref.child("listName")
+        let condition = _ref.child("title")
         condition.observe(.value) { (snapshot: FIRDataSnapshot) in
-            print((snapshot.value as AnyObject).description)
+            
         }
+    }
+    
+    @IBAction func onBtnSyncClicked(_ sender: UIButton) {
+        
     }
 }
 
