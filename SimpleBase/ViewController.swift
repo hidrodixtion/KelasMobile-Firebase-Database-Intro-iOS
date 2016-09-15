@@ -14,8 +14,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var txtTitle: UILabel!
     @IBOutlet weak var editTitle: UITextField!
     
-    
     let _ref = FIRDatabase.database().reference()
+    
+    var condition: FIRDatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +26,14 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        let condition = _ref.child("title")
-        condition.observe(.value) { (snapshot: FIRDataSnapshot) in
-            
+        condition = _ref.child("title")
+        condition.observe(.value) { [unowned self] (snapshot: FIRDataSnapshot) in
+            self.txtTitle.text = snapshot.value as? String
         }
     }
     
     @IBAction func onBtnSyncClicked(_ sender: UIButton) {
-        
+        condition.setValue(editTitle.text)
     }
 }
 
